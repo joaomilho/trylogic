@@ -150,4 +150,5 @@ DEPENDENCIES
   slim
   slim-rails
   thin
+  treetop
   uglifier (>= 1.0.3)
