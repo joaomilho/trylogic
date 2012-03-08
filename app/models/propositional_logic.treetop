@@ -1,0 +1,118 @@
+##
+# This parser is a fork of my work on "rl" but now adapted to Guerzoni's 'LPC' syntax, where:
+# A constant is T (verum) or ⊥ (falsum)
+# A 'sentencial char' is pN (like p0, p1...)
+# A formula: ϕ ::= (¬ϕ) | (ϕ ∧ ϕ) | (ϕ ∨ ϕ) | (ϕ → ϕ) | [A-Z] 
+##
+
+grammar PropositionalLogic
+
+  rule formula
+    '(' formula ')' {
+      def truth_table
+        formula.truth_table
+      end
+    }
+    /
+    '(' first:formula binary_operator second:formula ')' {
+      def truth_table
+        result = []  
+        first.truth_table.each{|f| 
+          second.truth_table.each{|s|
+            fvariables = f.keys
+            fvariables.delete(:result)
+            svariables = s.keys
+            svariables.delete(:result)
+            colide = false
+            for fv in fvariables
+              for sv in svariables
+                colide = true if(fv == sv and f[fv] != s[fv])
+              end
+            end
+            next if colide
+            result << f.merge(s).merge(:result => binary_operator.apply(f[:result],s[:result]))
+          }
+        }
+        result
+      end
+    }
+
+    / unary_operator formula {
+      def truth_table
+        formula.truth_table.map{|i| i.merge(:result => unary_operator.apply(i[:result])) }
+      end
+    }
+
+    / atom
+    
+  end
+  rule unary_operator
+    negation
+  end
+  rule binary_operator
+    conjunction / disjunction / implication / biimplication
+  end
+  rule negation
+    '¬' {
+      def apply(f)
+        !f
+      end
+    }
+  end
+  rule implication
+    '→' {
+      def apply(f,s)
+        f ? s : true
+      end
+    }
+  end
+  rule biimplication
+    '↔' {
+      def apply(f,s)
+        ! f ^ s
+      end
+    }
+  end
+  rule conjunction
+    '∧' {
+      def apply(f,s)
+        f & s
+      end
+    }
+  end
+  rule disjunction
+    '∨' {
+      def apply(f,s)
+        f | s
+      end
+    }
+  end
+  rule atom
+    sentencial_char / constant
+  end
+  rule sentencial_char
+     ('p0' / 'p1' / 'p2' / 'p3' / 'p4' / 'p5' / 'p6' / 'p7' / 'p8' / 'p9') {
+      def truth_table
+        [{text_value => true, :result => true},{text_value => false, :result => false}]
+      end
+     }
+  end
+  rule constant
+    verum / falsum
+  end
+  rule verum
+    'T' {
+      def truth_table
+        [{text_value => true, :result => true}]
+      end
+     }
+  end
+  rule falsum
+    '⊥' {
+      def truth_table
+        [{text_value => false, :result => false}]
+      end
+     }
+  end
+
+end

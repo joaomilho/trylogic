@@ -1,0 +1,32 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body{
+  background: #eee url(bright_squares.png);
+}
+.console{
+  width: 900px;
+  height: 200px;
+  // background: #EFEFEF;
+  padding: 0.5em;
+  overflow: auto;
+  .jquery-console-prompt-box {
+    
+  }
+  .jquery-console-cursor{
+    color: #444;
+    font-family: monospace;
+    background: #000;
+  }
+}
+table.tt{
+  th{
+    border: 1px solid #999;
+    padding: 2px 4px;    
+  }
+  td{
+    border: 1px solid #ccc;
+    padding: 2px 4px;
+  }
+}
