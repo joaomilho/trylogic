@@ -16,5 +16,6 @@ gem 'slim'
 gem 'bootstrap-sass'
 gem 'slim-rails'
 gem 'thin'
+gem 'heroku'
 
 # , '~> 1.4.3'
