@@ -46,12 +46,13 @@ class Proposition
     ! consistent?
   end
   
-  def compatible_with? propositions
+  def compatible? propositions
     (propositions << @formula).to_propositions.consistent?
   end
   
-  def consequence_of? propositions
+  def consequence? propositions
     conjunct_all = '(' + propositions.to_propositions.consider_all + '→' + @formula + ')'
+    # raise conjunct_all.inspect
     conjunct_all.to_proposition.tautology?
   end
 

@@ -18,5 +18,3 @@ gem 'slim-rails'
 gem 'thin'
 gem 'heroku'
 gem 'treetop'
-
-# , '~> 1.4.3'

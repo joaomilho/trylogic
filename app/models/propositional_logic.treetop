@@ -91,7 +91,7 @@ grammar PropositionalLogic
     sentencial_char / constant
   end
   rule sentencial_char
-     ('p0' / 'p1' / 'p2' / 'p3' / 'p4' / 'p5' / 'p6' / 'p7' / 'p8' / 'p9') {
+     ('p' / 'q' / 'r' / 's' / 't' / 'u' / 'v' / 'w' / 'x' / 'y'/ 'z') {
       def truth_table
         [{text_value => true, :result => true},{text_value => false, :result => false}]
       end

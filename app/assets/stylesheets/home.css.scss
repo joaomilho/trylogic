@@ -2,31 +2,236 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-body{
-  background: #eee url(bright_squares.png);
-}
-.console{
-  width: 900px;
-  height: 200px;
-  // background: #EFEFEF;
-  padding: 0.5em;
-  overflow: auto;
-  .jquery-console-prompt-box {
-    
-  }
-  .jquery-console-cursor{
-    color: #444;
-    font-family: monospace;
-    background: #000;
-  }
-}
-table.tt{
-  th{
-    border: 1px solid #999;
-    padding: 2px 4px;    
-  }
+@import "bootstrap";
+@import "bootstrap-responsive";
+
+table.help{
+  border: 1px solid #999;
+  background: rgba(255,255,255,0.6);
+  width: 100%;
   td{
-    border: 1px solid #ccc;
-    padding: 2px 4px;
+    text-align: center;
   }
 }
+  /* The console container element */
+  /* The inner console element. */
+  .jqconsole {
+      padding: 10px;
+  }
+  /* The cursor. */
+  .jqconsole-cursor {
+      background-color: gray;
+  }
+  /* The cursor color when the console looses focus. */
+  .jqconsole-blurred .jqconsole-cursor {
+      background-color: #666;
+  }
+  /* The current prompt text color */
+  .jqconsole-prompt {
+      color: #0d0;
+  }
+  /* The command history */
+  .jqconsole-old-prompt {
+      color: #0b0;
+      font-weight: normal;
+  }
+  /* The text color when in input mode. */
+  .jqconsole-input {
+      color: #dd0;
+  }
+  /* Previously entered input. */
+  .jqconsole-old-input {
+      color: #bb0;
+      font-weight: normal;
+  }
+  /* The text color of the output. */
+  .jqconsole-output {
+      color: white;
+  }
+  
+.box{
+  background: rgba(255,255,255,0.6);
+  margin: 20px;
+  padding: 20px;
+  h1{
+    margin: 0px;
+  }
+}
+body{
+  background: #eee url(bright_squares.png) !important;
+  padding: 0;
+  margin: 0;
+  
+}
+
+.no{
+  margin: 20px;
+  background: white;
+  color: #c00 !important;
+}
+
+.yes{
+  margin: 20px;
+  background: white;
+  color: #0c0 !important;
+}
+
+table.tt{
+  margin: 20px;
+  background: white;
+  border: 1px solid #aaa !important;
+  tr.true{
+    background: #efe;
+  }
+  tr.true:hover{
+    background: #bfb;
+  }
+  tr.false{
+    background: #fee;
+  }
+  tr.false:hover{
+    background: #fbb;
+  }
+  th{
+    border-bottom: 1px solid #aaa;
+    padding: 2px 4px;
+    width: 40px;
+  }
+  tr td:last-child{
+    border-left: 1px solid #aaa;
+  }
+  tr td:first-child{
+    border-left: none;
+  }
+  // tr{}
+  td{
+    border-left: 1px solid #ddd;
+    // border-bottom: 1px solid #eee;
+    // border-top: 1px solid rgba(0,0,0,0.1);
+    padding: 2px 4px;
+    text-align: center;
+  }
+  td.true{
+    color: #0c0;
+  }
+  td.false{
+    color: #c00;
+  }
+
+}
+
+
+.ready{
+  color: #999 !important;
+}
+.console-wrapper{
+  
+}
+
+
+
+#console{
+  border-left: 12px solid #998;
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+}
+#console *{
+  font-family:"Monaco", "Courier New", monospace;
+  font-size: 18px;
+  line-height: 18px;
+  color: #333;
+}
+
+
+#console span.label{
+  display:none;
+  position:absolute;
+  bottom:0px;
+  right:-28px;
+  height:40px;
+  width:80px;
+  z-index:100}
+
+.console{
+
+}
+
+.console pre.jqconsole{
+  padding:20px;
+  margin:0;
+  overflow-y:auto;
+  overflow-x:hidden!important;
+  background: #fff !important;
+  border: none;
+  @include border-radius(0);
+  // border:2px solid #CCC
+}
+
+.console .jqconsole-cursor{
+  background-color:#ccc;
+  line-height:115%;
+  position:relative!important;
+  margin-right:-8px
+}
+
+.console .jqconsole-blurred .jqconsole-cursor{
+  background-color:#666
+}
+
+.invalid{
+  display: block;
+  margin: 20px;
+  color: red !important;
+  a{
+    color: #009 !important;
+  }
+}
+.console .jqconsole-prompt,.console .jqconsole-old-prompt,.console .output{
+  position:relative;
+  margin:2px 10px
+}
+
+.console .jqconsole-prompt,.console .jqconsole-old-prompt{color:#333}
+
+.console .jqconsole-input{color:#000}
+
+.console .jqconsole-old-input{color:#999}
+
+.console .brace{color:lime}
+
+.console .paren{color:lime}
+
+.console .bracket{color:lime}
+
+.console .output{color:green;
+display:block}
+
+.console .log,.console .error{display:block;
+white-space:pre-wrap;
+word-break:normal;
+word-wrap:normal;
+margin:10px;
+padding:10px;
+color:#444;
+background:beige;
+border-radius:5px;
+-moz-border-radius:5px;
+-webkit-border-radius:5px}
+
+.console .log p,.console .error p{margin:0;
+padding:0;
+margin-top:-25px}
+
+.console .log p:first-child,.console .error p:first-child{margin-top:0}
+
+.console .error,.console .wrong{color:crimson}
+
+.console a{font-weight:normal}
+
+
+
+//
+
+

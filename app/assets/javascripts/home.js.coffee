@@ -2,6 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-app = exports ? this
-$ ->
-  app.konsole = new app.Console()
+
+# app = exports ? this
+# $ ->
+#   app.konsole = new app.Console()

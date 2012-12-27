@@ -1,5 +1,6 @@
 Trylogic::Application.routes.draw do
-  get "home/index"
+  # get "home/index"
   get "eval", controller: :home, action: :evaluate
-  root to: "home#index"
+  match "jq", to: "home#jq"
+  root to: "home#jq"
 end

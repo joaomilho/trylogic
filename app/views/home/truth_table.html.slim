@@ -1,12 +1,12 @@
 - keys = @formula.truth_table.first.keys
 - keys.delete(:result)
-table.tt
+table.tt[cellpadding=0 cellspacing=0]
   tr
     - for key in keys
       th = key
     th.result R
     - for row in @formula.truth_table
-      tr[class=(row[:result] ? 'true_row' : 'false_row')]
+      tr[class=row[:result].to_s]
         - for key in keys
-          td = row[key] ? 'V' : 'F'
-        td = row[:result] ? 'V' : 'F'
+          td[class=row[key].to_s] = row[key] ? 'T' : 'F'
+        td[class=row[:result].to_s] = row[:result] ? 'T' : 'F'

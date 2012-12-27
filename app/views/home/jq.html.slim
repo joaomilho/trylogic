@@ -1,0 +1,160 @@
+
+= javascript_include_tag "jquery"
+= javascript_include_tag "blink"
+= javascript_include_tag "jqconsole.min"
+= stylesheet_link_tag "home", media: "all"
+
+.container-fluid
+  .row-fluid
+    .span4
+      / #explanation
+      p
+        h1 Welcome to TryLogic!
+      p TryLogic is an online tool to test propositional logic formulas. It's inspired by <a href="http://tryhaskell.org/" target="_blank">TryHaskell</a> and <a href="http://tryruby.org/" target="_blank">TryRuby</a>
+      / h3 DOCS:
+      h4 Operations:
+      p
+        table.help
+          tr
+            th Symbol
+            th Char
+            th Shortcuts
+            th e.g.
+          tr
+            td Verum
+            td <code>⊤</code>
+            td T, 1
+            td <code>T</code>
+          tr
+            td Falsum
+            td <code>⊥</code>
+            td F, 0
+            td <code>⊥</code>
+          tr
+            td Proposition
+            td <code>p</code>, <code>q</code> ... <code>z</code>
+            td 
+            td <code>p</code>
+          tr
+            td Negation
+            td <code>¬</code>
+            td !, ~, not
+            td <code>¬p</code>
+          tr
+            td Implication
+            td <code>→</code>
+            td ->, if
+            td <code>(p→q)</code>
+          tr
+            td Double Implication
+            td <code>↔</code>
+            td <->, iif
+            td <code>(p↔q)</code>
+          tr
+            td Conjunction
+            td <code>∧</code>
+            td &, ^, and
+            td <code>(p∧q)</code>
+          tr
+            td Disjunction
+            td <code>∨</code>
+            td v, |, or
+            td <code>(p∨q)</code>
+      h4 Outputs:
+      p
+        table.help
+          tr
+            th Command
+            th Outputs
+            th e.g.
+          tr
+            td tt (or none)
+            td Truth Table
+            td <code>p</code>, <code>tt p</code>
+          tr
+            td tautology?
+            td Yes or No
+            td <code>tautology? p</code>
+          tr
+            td contradiction?
+            td Yes or No
+            td <code>contradiction? p</code>
+          tr
+            td consistent?
+            td Yes or No
+            td <code>consistent? p</code>
+          tr
+            td compatible?
+            td Yes or No
+            td <code>compatible? p q</code>
+          tr
+            td consequence?
+            td Yes or No
+            td <code>consequence? (p→q) p q</code>
+    .span8.console-wrapper
+      #console.console
+
+javascript:
+  $(function () {
+    var jqconsole = $('#console').jqconsole('', '> ');
+    
+
+    var startPrompt = function () {
+
+      // Start the prompt with history enabled.
+      jqconsole.Prompt(true, function (input) {
+        // Output input with the class jqconsole-output.
+        // jqconsole.Write(input + '\n', 'jqconsole-output');
+        $.getJSON('/eval', {line: input}, function(data){
+
+          if( data['valid'] )
+            jqconsole.Append( $(data['truth_table']) )
+          else
+            jqconsole.Append( $('<div class="invalid">Invalid formula.</div>') )
+            //<a href="/docs">Read the docs</a>
+        });
+        // Restart the prompt.
+        startPrompt();
+      });
+    };
+    startPrompt();
+    jqconsole.Append( '<span class="ready">TryLogic prompt is ready to rock!</span><br /><br />' )
+    jqconsole.SetPromptText(#{raw (params[:f] ? params[:f].inspect : 'consequence? (p→q) p q'.inspect)});
+    $('#console').keyup(function(){
+      var text = initial_text = jqconsole.GetPromptText()
+
+      replaces = [
+        ['<->', '↔'],
+        ['iif', '↔'],
+        ['->', '→'],
+        ['if', '→'],        
+        ['and', '∧'],
+        ['&', '∧'],
+        ['^', '∧'],
+        ['or', '∨'],
+        ['v', '∨'],
+        ['|', '∨'],
+        ['not', '¬'],
+        ['!', '¬'],
+        ['~', '¬'],
+        ['T', '⊤'],
+        ['1', '⊤'],
+        ['F', '⊥'],
+        ['0', '⊥']
+        // ,
+        // ['ta', 'tautology? '],
+        // ['cont', 'contradiction? '],
+        // ['consi', 'consistent? '],
+        // ['com', 'compatible? '],
+        // ['conse', 'consequence? ']
+      ]
+
+      $(replaces).each(function(_,rep){
+        text = text.replace(rep[0], rep[1])
+      })
+      if(text != initial_text)
+        jqconsole.SetPromptText(text)
+    });
+
+    $('.jqconsole-cursor').blink()
+  });
