@@ -1,12 +1,12 @@
 == TryLogic
 
+http://trylogic.heroku.com
+
 TryLogic is an online propositional logic parser inspired by TryHaskell and TryRuby.
 
 The objective is to help High School and Junior students with their logic exercises. All formula evaluators I've found are old, ugly and/or too complex for newbies.
 
 There's still no "help" and other learning stuff, but it's open source, so if you're interested in helping just fork and contribute.
-
-https://github.com/joaomilho/trylogic
 
 == Roadmap
 
