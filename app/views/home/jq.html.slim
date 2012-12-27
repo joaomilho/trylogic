@@ -106,7 +106,7 @@ javascript:
       jqconsole.Prompt(true, function (input) {
         // Output input with the class jqconsole-output.
         // jqconsole.Write(input + '\n', 'jqconsole-output');
-        $.getJSON('/eval', {line: input}, function(data){
+        $.getJSON('/eval/'+encodeURIComponent(input), {}, function(data){
 
           if( data['valid'] )
             jqconsole.Append( $(data['truth_table']) )

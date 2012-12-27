@@ -3,6 +3,8 @@
 
 class HomeController < ApplicationController
 
+  caches_page :evaluate
+
   def jq
   end
 
@@ -14,7 +16,7 @@ class HomeController < ApplicationController
   	# Treetop.load "propositional_logic"
     # @parser = PropositionalLogicParser.new
     # raise Proposition.inspect
-    commands = params[:line].split(/\s+/)
+    commands = params[:fla].split(/\s+/)
     # return render json: {valid: true, truth_table: "<span>#{commands.inspect}</span>"}
 
     output = commands.size == 1 ? "tt" : commands.shift
