@@ -112,9 +112,11 @@ javascript:
           else
             jqconsole.Append( $('<div class="invalid">Invalid formula.</div>') )
             //<a href="/docs">Read the docs</a>
+          // Restart the prompt.
+          startPrompt();
         });
-        // Restart the prompt.
-        startPrompt();
+        
+        
       });
     };
     startPrompt();
